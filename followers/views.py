@@ -4,13 +4,16 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import FollowSerializer
 from .models import UserFollowing
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from rest_framework import status
 
 # Create your views here.
 class FollowsView(APIView):
 
     def post(self, request):
         data = request.data
-        data['following_user_id'] = [request.user.id]
+        data['following_user_id'] = request.user.id
         serializer = FollowSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -27,5 +30,5 @@ class FollowsView(APIView):
         item = get_object_or_404(UserFollowing, pk=pk)
         item.delete()
         return Response({
-            'message': 'Task Deleted Successfully'
+            'message': 'You recently unfollow this user.'
         })

@@ -44,7 +44,7 @@ class ProfileView(APIView):
         item = get_object_or_404(Profile, pk=pk)
         item.delete()
         return Response({
-            'message': 'Task Deleted Successfully'
+            'message': 'Your profile deleted successfully'
         })
 
 

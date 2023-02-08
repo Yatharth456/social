@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'followers',
     'user',
     'blog',
+    'channels',
+    'notifications_rest',
+    'notifications',
+    
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'social.wsgi.application'
+# WSGI_APPLICATION = 'social.wsgi.application'
 
 
 # Database
@@ -180,4 +184,15 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+ASGI_APPLICATION = "social.asgi.application" #routing.py will be created later
+CHANNEL_LAYER = {
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        'CONFIG': {
+            'hosts': [("127.0.0.1", 8000)],
+        },
+    },
+    'ROUTING': 'ws.routing.application',
 }
