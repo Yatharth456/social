@@ -24,6 +24,7 @@ urlpatterns = [
     path('profile/', include('userprofile.urls')),
     path('follow/', include('followers.urls')),
     path('blog/', include('blog.urls')),
+    path('notifications/', include('notifications.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

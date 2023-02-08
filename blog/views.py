@@ -4,6 +4,10 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from.serializers import PostSerializer, CommentSerializer, ReplySerializer
 from .models import *
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from rest_framework import status
+
 # Create your views here.
 class BlogPostView(APIView):
     def post(self, request):
@@ -25,7 +29,7 @@ class BlogPostView(APIView):
         item = get_object_or_404(Post, pk=pk)
         item.delete()
         return Response({
-            'message': 'Task Deleted Successfully'
+            'message': 'Your post Deleted Successfully'
         })
 
 class CommentView(APIView):
