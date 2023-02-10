@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'channels',
     'notifications_rest',
     'notifications',
-    
+    'webpush',
+
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'social.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -186,13 +187,40 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-ASGI_APPLICATION = "social.asgi.application" #routing.py will be created later
+NOTIFICATIONS_NOTIFICATION_MODEL = 'social.notifications.Notification'
+
+ASGI_APPLICATION = "social.asgi.application"
 CHANNEL_LAYER = {
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
         'CONFIG': {
             'hosts': [("127.0.0.1", 8000)],
         },
     },
-    'ROUTING': 'ws.routing.application',
+}
+
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BNHjfv-PrvEukBDmSTtPTN8rnC5W7wOVB7XXtqGinS7Eq1FdSvqbQDbnGJB_3ElU4p-eqYlJtM9KhqZQTmcszvI",
+   "VAPID_PRIVATE_KEY": "8wv4gmE168imPcsfwWMTA4VIN9CR_y9zZ2nIdH_LkRg",
+   "VAPID_ADMIN_EMAIL": "yatharth@gmail.com"
+}
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_THROTTLE_CLASSES': [
+
+        'rest_framework.throttling.AnonRateThrottle',
+
+        'rest_framework.throttling.UserRateThrottle'
+
+    ],
+
+    'DEFAULT_THROTTLE_RATES': {
+
+        'anon': '1/min',
+
+        'user': '2/min'
+
+    }
+
 }
