@@ -12,7 +12,6 @@ from .models import Profile
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated,]
 
-    serializer_class = ProfileSerializer
     def post(self, request):
         data = request.data
         data["users"] = request.user.id

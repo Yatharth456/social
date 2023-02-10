@@ -3,6 +3,6 @@ from .views import FollowsView
 
 urlpatterns = [
     path('fallo/', FollowsView.as_view(), name='register'),
-    path('fallo/<int:pk>', FollowsView.as_view(), name='register'),
+    path('fallo/<int:pk>', FollowsView.as_view(), name='get_by_id'),
 
 ]

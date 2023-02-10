@@ -4,9 +4,6 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import FollowSerializer
 from .models import UserFollowing
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
-from rest_framework import status
 
 # Create your views here.
 class FollowsView(APIView):
